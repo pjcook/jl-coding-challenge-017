@@ -11,7 +11,7 @@ struct Card {
     }
     
     enum Rank: String {
-        case ace = "1"
+        case ace = "A"
         case two = "2"
         case three = "3"
         case four = "4"
@@ -120,11 +120,10 @@ struct Hand {
             } else {
                 let remainder = sorted.count + 1
                 for i in 0...remainder {
-                    print(card)
                     let high = (remainder - i) * card.valueHigh
                     let low = i * card.valueLow
                     if high + low + value <= Hand.targetValue
-                        || i == remainder - 1 {
+                        || i == remainder {
                         value += high + low
                         break
                     }

@@ -44,13 +44,13 @@ class PontoonTests: XCTestCase {
     
     func test_winningHand_player_pontoon() throws {
         let dealer = Player(Player.dealerName, hand: try Hand(["KS", "KC"]))
-        let player = Player("Bob", hand: try Hand(["KH", "1D"]))
+        let player = Player("Bob", hand: try Hand(["KH", "AD"]))
         
         XCTAssertTrue(player.winningHand(dealer.hand))
     }
     
     func test_winningHand_dealer_pontoon() throws {
-        let dealer = Player(Player.dealerName, hand: try Hand(["KS", "1C"]))
+        let dealer = Player(Player.dealerName, hand: try Hand(["KS", "AC"]))
         let player = Player("Bob", hand: try Hand(["TH", "5D"]))
         
         XCTAssertFalse(player.winningHand(dealer.hand))
@@ -64,7 +64,7 @@ class PontoonTests: XCTestCase {
     }
     
     func test_hand_pontoon() throws {
-        let hand = try Hand(["1H", "JD"])
+        let hand = try Hand(["AH", "JD"])
         XCTAssertEqual(Hand.targetValue, hand.value)
         XCTAssertTrue(hand.isPontoon)
     }
@@ -78,13 +78,13 @@ class PontoonTests: XCTestCase {
     }
     
     func test_hand_five_card_trick() throws {
-        let hand = try Hand(["1H", "1D", "1S", "1C", "2D"])
+        let hand = try Hand(["AH", "AD", "AS", "AC", "2D"])
         XCTAssertEqual(16, hand.value)
         XCTAssertTrue(hand.isFiveCardTrick)
     }
     
     func test_hand_multiple_aces() throws {
-        let hand = try Hand(["1H", "1D"])
+        let hand = try Hand(["AH", "AD"])
         XCTAssertEqual(12, hand.value)
         XCTAssertFalse(hand.isBust)
     }
@@ -110,5 +110,30 @@ class PontoonTests: XCTestCase {
         XCTAssertFalse(hand1 <= hand2)
         XCTAssertTrue(hand1 >= hand2)
         XCTAssertFalse(hand1 == hand2)
+    }
+    
+    func test_sample_data1() throws {
+        let hand = try Hand(["QH","AC"])
+        XCTAssertTrue(hand.isPontoon)
+    }
+    
+    func test_sample_data2() throws {
+        let hand = try Hand(["3D","2C","4H","AD","5C"])
+        XCTAssertTrue(hand.isFiveCardTrick)
+    }
+    
+    func test_sample_data3() throws {
+        let hand = try Hand(["7C","AD","9H"])
+        XCTAssertEqual(17, hand.value)
+    }
+    
+    func test_sample_data4() throws {
+        let hand = try Hand(["AD","8S","2H"])
+        XCTAssertEqual(21, hand.value)
+    }
+    
+    func test_sample_data5() throws {
+        let hand = try Hand(["AD","AH","AS"])
+        XCTAssertEqual(13, hand.value)
     }
 }
