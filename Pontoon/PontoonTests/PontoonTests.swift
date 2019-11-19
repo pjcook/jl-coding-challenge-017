@@ -18,49 +18,49 @@ class PontoonTests: XCTestCase {
         XCTAssertTrue(player.hand > dealer.hand)
         XCTAssertTrue(dealer.isDealer)
         XCTAssertFalse(player.isDealer)
-        XCTAssertTrue(player.winningHand(dealer.hand))
+        XCTAssertTrue(player.didHandBeatDealer(dealer.hand))
     }
     
     func test_winningHand_player_isBust() throws {
         let dealer = Player(Player.dealerName, hand: try Hand(["KS", "KC"]))
         let player = Player("Bob", hand: try Hand(["KH", "KD", "4D"]))
         
-        XCTAssertFalse(player.winningHand(dealer.hand))
+        XCTAssertFalse(player.didHandBeatDealer(dealer.hand))
     }
     
     func test_winningHand_dealer_isBust() throws {
         let dealer = Player(Player.dealerName, hand: try Hand(["KS", "KC", "4D"]))
         let player = Player("Bob", hand: try Hand(["KH", "KD"]))
         
-        XCTAssertTrue(player.winningHand(dealer.hand))
+        XCTAssertTrue(player.didHandBeatDealer(dealer.hand))
     }
     
     func test_winningHand_dealer_higher_score() throws {
         let dealer = Player(Player.dealerName, hand: try Hand(["KS", "KC"]))
         let player = Player("Bob", hand: try Hand(["KH", "9D"]))
         
-        XCTAssertFalse(player.winningHand(dealer.hand))
+        XCTAssertFalse(player.didHandBeatDealer(dealer.hand))
     }
     
     func test_winningHand_player_pontoon() throws {
         let dealer = Player(Player.dealerName, hand: try Hand(["KS", "KC"]))
         let player = Player("Bob", hand: try Hand(["KH", "AD"]))
         
-        XCTAssertTrue(player.winningHand(dealer.hand))
+        XCTAssertTrue(player.didHandBeatDealer(dealer.hand))
     }
     
     func test_winningHand_dealer_pontoon() throws {
         let dealer = Player(Player.dealerName, hand: try Hand(["KS", "AC"]))
         let player = Player("Bob", hand: try Hand(["TH", "5D"]))
         
-        XCTAssertFalse(player.winningHand(dealer.hand))
+        XCTAssertFalse(player.didHandBeatDealer(dealer.hand))
     }
     
     func test_winningHand_player_fiveCardTrick() throws {
         let dealer = Player(Player.dealerName, hand: try Hand(["KS", "9C"]))
         let player = Player("Bob", hand: try Hand(["2H", "5D", "3S", "4D", "2C"]))
         
-        XCTAssertTrue(player.winningHand(dealer.hand))
+        XCTAssertTrue(player.didHandBeatDealer(dealer.hand))
     }
     
     func test_hand_pontoon() throws {

@@ -96,7 +96,7 @@ struct Player {
         self.hand = hand
     }
     
-    func winningHand(_ dealer: Hand) -> Bool {
+    func didHandBeatDealer(_ dealer: Hand) -> Bool {
         if hand.isBust { return false }
         if dealer.isBust { return true }
         if dealer > hand, !hand.isFiveCardTrick || dealer.isPontoon { return false }
@@ -119,14 +119,9 @@ struct Hand {
                 value += card.valueLow
             } else {
                 let remainder = sorted.count + 1
-                for i in 0...remainder {
-                    let high = (remainder - i) * card.valueHigh
-                    let low = i * card.valueLow
-                    if high + low + value <= Hand.targetValue
-                        || i == remainder {
-                        value += high + low
-                        break
-                    }
+                value += remainder * card.valueLow
+                if value + card.valueHigh - card.valueLow <= Hand.targetValue {
+                    value += card.valueHigh - card.valueLow
                 }
                 
                 break
